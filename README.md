@@ -6,6 +6,13 @@ For custom layers, basically, if we could trace the model/graph in pytorch using
 Nodes in ONNX graphs do not need registering, they are simply dicts that store information. Refer to: https://pytorch.org/docs/stable/onnx.html and https://blog.csdn.net/u012436149/article/details/78829329 
 for more information. Also, you can refer to custom_example.py, which implements a ReLU and should export a custom layer (MyReLU) as following.
 
+Basically, first thing you need to do is, re-write your custom layer to turn it from a legacy function to non-legacy function (which
+means your custom layer is now a nn.module object, so it could be traced, if you understand Chinese, https://blog.csdn.net/u012436149/article/details/78829329). Then, modify symbolic function, what inputs to feed and what parameters to pass. Here, we do not modify symbolic.py, but keep the symbolic function inside the class, to make it more trackable. When you modify symbolic.py, or the symbolic function within the custom layer, refer to the example.
+
+##### TO-DO
+Btw, symbolic.py is a hugely useful file when converting models. So..
+[] Write a blog post about symbolic.py and ONNX custom layer conversion details
+
 ```python
 class MyReLUFunction(Function):
 
@@ -40,7 +47,4 @@ graph(%0 : Float(10, 1, 3, 3)
   return (%4);                                                                                          
 }            
 ```
-
-Basically, first thing you need to do is, re-write your custom layer to turn it from a legacy function to non-legacy function (which
-means your custom layer is now a nn.module object, so it could be traced, if you understand Chinese, https://blog.csdn.net/u012436149/article/details/78829329). Then, modify symbolic function, what inputs to feed and what parameters to pass. Here, we do not modify symbolic.py, but keep the symbolic function inside the class, to make it more trackable. When you modify symbolic.py, or the symbolic function within the custom layer, refer to the example.
 
