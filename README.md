@@ -11,7 +11,7 @@ means your custom layer is now a nn.module object, so it could be traced, if you
 
 ##### TO-DO
 Btw, symbolic.py is a hugely useful file when converting models. So..
-[] Write a blog post about symbolic.py and ONNX custom layer conversion details
+- [ ] Write a blog post about symbolic.py and ONNX custom layer conversion details
 
 ```python
 class MyReLUFunction(Function):
