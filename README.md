@@ -10,7 +10,12 @@ Basically, first thing you need to do is, re-write your custom layer to turn it 
 means your custom layer is now a nn.module object, so it could be traced, if you understand Chinese, https://blog.csdn.net/u012436149/article/details/78829329). Then, modify symbolic function, what inputs to feed and what parameters to pass. Here, we do not modify symbolic.py, but keep the symbolic function inside the class, to make it more trackable. When you modify symbolic.py, or the symbolic function within the custom layer, refer to the example.
 
 ##### TO-DO
-Btw, symbolic.py is a hugely useful file when converting models. So..
+Btw, symbolic.py is a hugely useful file when converting models. So I uploaded my own version of it. Actually, ONNX supports multiple
+libraries, so they are trying to support as many parameters from as many libraries (tensorflow, PyTorch, Caffe and etc.) as possible. But
+if you are doing a specific conversion (for me it is Pytorch2Caffe), you do not need that many generic support. ONNX is trying to add layers
+in order to support more parameters (use dynamic constant layer to store the parameter values and a "empty" layer that denotes the parameter
+name), which is good, but for a specific task, quite cumbersome. Try comment out some sections in symbolic.py for better support. Do not worry
+about registry stuff, every converted op is simply a dict. Just store enough useful info in the dict would be good.
 - [ ] Write a blog post about symbolic.py and ONNX custom layer conversion details
 
 ```python
